@@ -1,0 +1,13 @@
+[
+    {
+        "_id": "5dcd81f42e2aab923cbd653d",
+        "email": "marilia.oliveira@outlook.com",
+        "nome": "Marilia Messias",
+        "cpf": 1234567890,
+        "dataNascimento": "1992-04-03T03:00:00.000Z",
+        "estadoCivil": "Solteira",
+        "telefone": 123456789,
+        "comprou": true
+    }
+    
+]
