@@ -1,8 +1,11 @@
-const Clientes = require('../model/clientes')
+
+//informar as requisicoes e onde ele vai buscar as informacoes 
+const Clientes = require('../model/clientes')//faz a consulta no banco de dados ao inves do json
 
 const fs = require('fs');
 
-exports.get = (req, res) => {
+//modulo Get
+exports.getClientes = (req, res) => {
   // console.log(req.url)
   // res.status(200).send(alunas)
 
@@ -36,14 +39,12 @@ exports.getCpf = (req, res) => {
   })
 }
 
-
-exports.post = (req, res) => {
-
-  let cliente = new Clientes(req.body);// da minha requisicao pegou o body
-  cliente.save(function (err) {//funcao de salvar 
-    if (err) res.status(500).send(err);
-
-    res.status(201).send({ message: ' Cliente incluido com sucesso' })
-
+// modulos post
+exports.postCliente = (req, res) => {//exporta a rota para a route consumir
+  let cliente = new Clientes(req.body);// pega as informacoes do body de acordo com o schema
+  
+  cliente.save(function (err) {//funcao de salvar se estiver tudo ok conforme o schema
+    if (err) res.status(500).send(err);//volta erro se nao estiver igual ao schema
+    res.status(201).send({ status: true, message: ' Cliente incluido com sucesso' })
   })
 }

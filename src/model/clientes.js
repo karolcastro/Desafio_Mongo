@@ -1,3 +1,5 @@
+// caracteristicas do cliente que estrutura o banco de dados
+
 const mongoose = require('mongoose');
 
 const clientesSchema = new mongoose.Schema({
