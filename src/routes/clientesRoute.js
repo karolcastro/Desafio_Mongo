@@ -5,10 +5,10 @@ const controller = require("../controllers/clientesController")
 router.get("/", controller.get);
 router.get("/clientes", controller.get)
 
-// router.get("/compradores", controller.get);
-// router.get("/cpf", controller.get);
+router.get("/compradores", controller.getCompradores);
+router.get("/:cpf", controller.getCpf);
 
 
-// router.post("/:id/clientes", controller.post);
+router.post("/", controller.post);
 
 module.exports = router
