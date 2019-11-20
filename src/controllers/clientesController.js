@@ -4,26 +4,30 @@ const Clientes = require('../model/clientes')//faz a consulta no banco de dados 
 
 const fs = require('fs');
 
-//modulo Get
+//modulos Get
 exports.getClientes = (req, res) => {
-  // console.log(req.url)
-  // res.status(200).send(alunas)
 
-  Clientes.find(function (err, clientes) {
+  Clientes.find(function (err, clientes) {// funcao callback traz todo mundo do banco de dados(err/para erro - clientes/retorna so clientes
+    if (err) res.status(500).send(err);
     console.log(clientes);
     res.status(200).send(clientes);
   })
 }
 
 exports.getCompradores = (req, res) => {
+  // Clientes.find({comprou:true},function(err, clientes)// outra possibilidade
+  //if (err) return res.status(500).send(err);
+  //const clienteComprador = clientes.map(cliente =>{
+   // return
+   //nome: cliente.nome,
+   //email: cliente.email
+  //})
   Clientes.find(function (err, cliente) {
     if (err) return res.status(500).send(err);
 
-    const clienteComprador = cliente.filter(cliente => cliente.comprou == true)
+    const clienteComprador = cliente.filter(cliente => cliente.comprou == true)// faz o filtro dequem comprou
     console.log(clienteComprador)
     const cliComprador = clienteComprador.map(({ nome, email }) => ({ nome, email }))// desconstrucao puxa quantos quiserrr
-    // console.log(cliComprador)
-    // const clienteComprou = cliComprador.map(cliente => cliente.email)
     console.log(cliComprador)
     res.status(200).send(cliComprador)
   }
@@ -39,10 +43,10 @@ exports.getCpf = (req, res) => {
   })
 }
 
-// modulos post
+// modulo post
 exports.postCliente = (req, res) => {//exporta a rota para a route consumir
   let cliente = new Clientes(req.body);// pega as informacoes do body de acordo com o schema
-  
+
   cliente.save(function (err) {//funcao de salvar se estiver tudo ok conforme o schema
     if (err) res.status(500).send(err);//volta erro se nao estiver igual ao schema
     res.status(201).send({ status: true, message: ' Cliente incluido com sucesso' })

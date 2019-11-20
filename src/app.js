@@ -1,11 +1,11 @@
 
 // dependencias do projeto
 const express = require("express")// constroi o servidor
-const mongoose = require("mongoose")// faz o require do mongoose
+const mongoose = require("mongoose")// faz o require do mongoose que é para aconexao do mongo
 const bodyParser = require("body-parser")// converte p body para um json
 const app = express()
 
-mongoose.connect('mongodb://localhost:27017/clientes', { useNewUrlParser: true });// para chamar a conexao
+mongoose.connect('mongodb://localhost:27017/clientes', { useNewUrlParser: true });// para chamar a conexao com o banco de dados mongo
 
 //chama o mongo
 let db = mongoose.connection;
