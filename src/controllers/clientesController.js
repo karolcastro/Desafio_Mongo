@@ -18,9 +18,9 @@ exports.getCompradores = (req, res) => {
   // Clientes.find({comprou:true},function(err, clientes)// outra possibilidade
   //if (err) return res.status(500).send(err);
   //const clienteComprador = clientes.map(cliente =>{
-   // return
-   //nome: cliente.nome,
-   //email: cliente.email
+  // return
+  //nome: cliente.nome,
+  //email: cliente.email
   //})
   Clientes.find(function (err, cliente) {
     if (err) return res.status(500).send(err);
@@ -50,5 +50,22 @@ exports.postCliente = (req, res) => {//exporta a rota para a route consumir
   cliente.save(function (err) {//funcao de salvar se estiver tudo ok conforme o schema
     if (err) res.status(500).send(err);//volta erro se nao estiver igual ao schema
     res.status(201).send({ status: true, message: ' Cliente incluido com sucesso' })
+  })
+}
+
+exports.deleteCliente = (req, res) => {
+  const cliente = req.params.cpf;
+
+  Clientes.findById(cliente, function (err, cliente) {
+    if (err) return res.status(500).send(err);
+
+    if (!cliente) {
+      return res.status(200).send({ message: `${cliente} nao localizado` })
+    }
+    cliente.remove(function(err){// exclusao do cliente
+      if(!err){
+        res.status(200).send({message:`${cliente} removido`})
+      }
+    })
   })
 }
