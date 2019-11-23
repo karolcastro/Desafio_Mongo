@@ -54,17 +54,17 @@ exports.postCliente = (req, res) => {//exporta a rota para a route consumir
 }
 
 exports.deleteCliente = (req, res) => {
-  const cliente = req.params.cpf;
+  const cpf = req.params.cpf;
 
-  Clientes.findById(cliente, function (err, cliente) {
+  Clientes.findOne({cpf}, function (err, cliente) {//
     if (err) return res.status(500).send(err);
 
-    if (!cliente) {
-      return res.status(200).send({ message: `${cliente} nao localizado` })
+    if (!cliente) {//com o length é possivel informar o erro correto
+      return res.status(200).send({ message: `${cliente.cpf} nao localizado` })
     }
     cliente.remove(function(err){// exclusao do cliente
       if(!err){
-        res.status(200).send({message:`${cliente} removido`})
+        res.status(200).send({message:`${cliente.cpf} removido`})
       }
     })
   })
