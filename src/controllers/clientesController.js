@@ -54,7 +54,6 @@ exports.postCliente = (req, res) => {//exporta a rota para a route consumir
   })
 }
 
-<<<<<<< HEAD
 // modulo update
 
 exports.updateClientes = (req, res) =>
@@ -70,7 +69,6 @@ exports.updateClientes = (req, res) =>
 //  const cpf = req.params.cpf // outra forma
 //  Clientes.update(
 //   { cpf: cpf }
-=======
 exports.deleteCliente = (req, res) => {
   const cpf = req.params.cpf;
 
@@ -87,4 +85,3 @@ exports.deleteCliente = (req, res) => {
     })
   })
 }
->>>>>>> 9f12ff0b3734457f58ca7f9f2a9bbc642f92bd91
