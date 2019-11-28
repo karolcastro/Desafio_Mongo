@@ -5,7 +5,8 @@ const mongoose = require("mongoose")// faz o require do mongoose que é para aco
 const bodyParser = require("body-parser")// converte p body para um json
 const app = express()
 
-mongoose.connect('mongodb://localhost:27017/clientes', { useNewUrlParser: true });// para chamar a conexao com o banco de dados mongo
+mongoose.connect('mongodb://admin:reprograma1@ds225902.mlab.com:25902/reprogramameli', { useNewUrlParser: true }) // para chamar a conexao com o banco de dados mongo
+//mongodb://localhost:27017/clientes
 
 //chama o mongo
 let db = mongoose.connection;
@@ -16,6 +17,7 @@ db.once('open', function () { // faz a conexao e se nao mostra o erro
 
 //rotas
 const clientes = require("./routes/clientesRoute")
+const sessions = require("./routes/sessionRoute")
 
 // app.use(express.json()); //talvez faca a mesma coisa que o bodyParse
 
@@ -30,6 +32,6 @@ app.use(function (req, res, next) {
 
 app.use(bodyParser.json());// indicar que vai ser utilizado para coverter o body no json
 app.use("/clientes", clientes)//áqui é definido o que sera chamado na rota do postman, todos comecaram com clientes/ alguma coisa
-
+app.use("/sessions", sessions)
 
 module.exports = app
