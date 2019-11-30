@@ -25,23 +25,23 @@ const authMiddleware = require("../middlewares/auth")
  *       "estadoCivil": "Solteira",
  *       "telefone": 444456789,
  *       "comprou": true
- *   }]
+ *   }];
+*/
 
 
 
-
-/*rotas definidas para o projeto que sera chamado no controller
-//router.get("/", controller.getClientes)//vc determina como sera o get desde que na controller tb seja o mesmo nome
+//rotas definidas para o projeto que sera chamado no controller
+router.get("/", controller.getClientes)//vc determina como sera o get desde que na controller tb seja o mesmo nome
 //a rota que inclui o registro no banco de dados
-//router.post("/", controller.postCliente);//importa a rota para o controller consumir
-//router.use(authMiddleware);
-//router.get("/compradores", controller.getCompradores);
-//router.get("/:cpf", controller.getCpf);// : é para p parametro
+router.post("/", controller.postCliente);//importa a rota para o controller consumir
+router.use(authMiddleware);
+router.get("/compradores", controller.getCompradores);
+router.get("/:cpf", controller.getCpf);// : é para p parametro
 
 // a rota que atualiza os dados do cliente
-//router.put("/:cpf", controller.updateClientes)
+router.put("/:cpf", controller.updateClientes)
 
 //delete
-//router.delete("/:cpf", controller.deleteCliente);
+router.delete("/:cpf", controller.deleteCliente);
 
-//module.exports = router*/
+module.exports = router

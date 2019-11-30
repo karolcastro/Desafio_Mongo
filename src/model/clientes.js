@@ -5,6 +5,7 @@ const mongoose = require('mongoose');// aplicacao que importa a conexao com o ba
 //estrutura com as propriedades que estarao no banco de dados, sao os requisitos do projeto
 const clientesSchema = new mongoose.Schema({
     nome: { type: String},
+    password:{ type: String},
     email: { type: String,}, //require: true, é um campo obrigatorio sem ele da erro
     cpf: { type: Number },
     dataNascimento: { type: Date },

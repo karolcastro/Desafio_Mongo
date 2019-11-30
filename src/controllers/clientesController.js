@@ -44,44 +44,55 @@ exports.getCpf = (req, res) => {
 }
 
 // modulo post
-exports.postCliente = (req, res) => {//exporta a rota para a route consumir
-  let cliente = new Clientes(req.body);// pega as informacoes do body de acordo com o schema
- 
+exports.postCliente = async (req, res) => {//exporta a rota para a route consumir
+  const { email, nome, password, cpf, dataNascimento, estadoCivil, telefone, comprou } = req.body;
+  const salt = bcrypt.genSaltSync(bcryptSalt);
+  const hashPass = await bcrypt.hashSync(password, salt)
 
-  cliente.save(function (err) {//funcao de salvar se estiver tudo ok conforme o schema
-    if (err) res.status(500).send(err);//volta erro se nao estiver igual ao schema
-    res.status(201).send({ status: true, message: ' Cliente incluido com sucesso' })
-  })
-}
+  let cliente = new Clientes({ email, nome, password:hashPass, cpf, dataNascimento, estadoCivil, telefone, comprou });// pega as informacoes do body de acordo com o schema
+
+  try {
+    
+    cliente.save(function (err) {//funcao de salvar se estiver tudo ok conforme o schema
+      return res.status(201).send({ status: true, message: ' Cliente incluido com sucesso' })
+    })
+  
+  }catch(err) {
+    return res.status(500).send(err)}
+     // if (err) res.status(500).send(err);//volta erro se nao estiver igual ao schema
+      //res.status(201).send({ status: true, message: ' Cliente incluido com sucesso' })
+    }
+  
+
 
 // modulo update
 
 exports.updateClientes = (req, res) =>
-  Clientes.update(
-    { cpf: req.params.cpf },// filtro de atualizacao neste caso é o cpf poderia ser o id, nome, etc
-    { $set: req.body },// o que irei alterar no banco pega o que manda e faz a alteracao
-    { upsert: true },// 
-    function (err) {
-      if (err) return res.status(500).send({ err });
-      res.status(200).send({ message: "atulizado com sucesso!" })
-    }
-  )
-//  const cpf = req.params.cpf // outra forma
-//  Clientes.update(
-//   { cpf: cpf }
-exports.deleteCliente = (req, res) => {
-  const cpf = req.params.cpf;
-
-  Clientes.findOne({cpf}, function (err, cliente) {//
-    if (err) return res.status(500).send(err);
-
-    if (!cliente) {//com o length é possivel informar o erro correto
-      return res.status(200).send({ message: `${cliente.cpf} nao localizado` })
-    }
-    cliente.remove(function(err){// exclusao do cliente
-      if(!err){
-        res.status(200).send({message:`${cliente.cpf} removido`})
+    Clientes.update(
+      { cpf: req.params.cpf },// filtro de atualizacao neste caso é o cpf poderia ser o id, nome, etc
+      { $set: req.body },// o que irei alterar no banco pega o que manda e faz a alteracao
+      { upsert: true },// 
+      function (err) {
+        if (err) return res.status(500).send({ err });
+        res.status(200).send({ message: "atulizado com sucesso!" })
       }
+    )
+  //  const cpf = req.params.cpf // outra forma
+  //  Clientes.update(
+  //   { cpf: cpf }
+  exports.deleteCliente = (req, res) => {
+    const cpf = req.params.cpf;
+
+    Clientes.findOne({ cpf }, function (err, cliente) {//
+      if (err) return res.status(500).send(err);
+
+      if (!cliente) {//com o length é possivel informar o erro correto
+        return res.status(200).send({ message: `${cliente.cpf} nao localizado` })
+      }
+      cliente.remove(function (err) {// exclusao do cliente
+        if (!err) {
+          res.status(200).send({ message: `${cliente.cpf} removido` })
+        }
+      })
     })
-  })
-}
+  }

@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
     console.log(decoded);
     req.userId = decoded.id;
     return next();
-  } catch (err) {
+  } catch (error) {
     return res.status(401).json({ error: "Invalid token!" });
   }
 };

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const authConfig = require ('../config/auth');
-const alunas = require("../model/alunas.json");
+const clientes = require("../model/clientes.json");
 const bcrypt = require("bcrypt");
 
 function checkPassword(passwordEntry, password) {
@@ -9,7 +9,7 @@ function checkPassword(passwordEntry, password) {
 
 exports.accessToken = (req, res) => {
   const { name, password: passwordEntry } = req.body;
-  const user = alunas.find(e => e.nome == name)
+  const user = clientes.find(e => e.nome == name)
   
   if (!user) {
     return res.status(401).json({ error: 'user not found' });
@@ -19,7 +19,7 @@ exports.accessToken = (req, res) => {
 
   try {
     checkPassword(passwordEntry, hashPass);
-  } catch (e) {
+  } catch (error) {
     return res.status(401).json({ error: 'password does not match' });
   }
 
@@ -33,7 +33,7 @@ exports.accessToken = (req, res) => {
         expiresIn: authConfig.expiresIn,
       }),
     });
-  } catch (e) {
+  } catch (error) {
     return res.status(401).json({ error: 'erro' });
   }
 }
