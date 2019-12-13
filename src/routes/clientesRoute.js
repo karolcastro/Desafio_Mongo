@@ -14,9 +14,9 @@ const authMiddleware = require("../middlewares/auth")
  *
  * 
  *
- * @apiSuccess {Object[]} clients Lista de Clientes.
- * @apiSuccess {json} Sucesso
- *  HTTP/1.1 200 OK
+ * @apiSuccess {Object[]} clientes Lista de Clientes.
+ * @apiSuccess {json} "Cadastro incluido com sucesso"
+ *  HTTP/1.1 201 OK
  *   [{
  *       "email": "Cindy@gmail.com",
  *       "nome": "Cindy ",

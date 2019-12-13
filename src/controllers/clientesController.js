@@ -87,7 +87,7 @@ exports.updateClientes = (req, res) =>
       if (err) return res.status(500).send(err);
 
       if (!cliente) {//com o length é possivel informar o erro correto
-        return res.status(200).send({ message: `${cliente.cpf} nao localizado` })
+        return res.status(404).send({ message: `${cliente.cpf} nao localizado` })
       }
       cliente.remove(function (err) {// exclusao do cliente
         if (!err) {
